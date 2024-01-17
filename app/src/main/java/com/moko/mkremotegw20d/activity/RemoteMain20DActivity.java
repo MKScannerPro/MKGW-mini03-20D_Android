@@ -10,9 +10,6 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.elvishew.xlog.XLog;
 import com.google.gson.Gson;
@@ -26,7 +23,7 @@ import com.moko.mkremotegw20d.activity.set.DeviceSetting20DActivity;
 import com.moko.mkremotegw20d.activity.set.ModifySettings20DActivity;
 import com.moko.mkremotegw20d.adapter.Device20DAdapter;
 import com.moko.mkremotegw20d.base.BaseActivity;
-import com.moko.mkremotegw20d.databinding.ActivityMainRemoteWithMetering20dBinding;
+import com.moko.mkremotegw20d.databinding.ActivityMainRemote20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
 import com.moko.mkremotegw20d.dialog.AlertMessageDialog;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
@@ -61,7 +58,10 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class RemoteMainWithMetering20DActivity extends BaseActivity<ActivityMainRemoteWithMetering20dBinding> implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener {
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBinding> implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener {
     private ArrayList<MokoDevice> devices;
     private Device20DAdapter adapter;
     public Handler mHandler;
@@ -130,8 +130,8 @@ public class RemoteMainWithMetering20DActivity extends BaseActivity<ActivityMain
     }
 
     @Override
-    protected ActivityMainRemoteWithMetering20dBinding getViewBinding() {
-        return ActivityMainRemoteWithMetering20dBinding.inflate(getLayoutInflater());
+    protected ActivityMainRemote20dBinding getViewBinding() {
+        return ActivityMainRemote20dBinding.inflate(getLayoutInflater());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -326,7 +326,7 @@ public class RemoteMainWithMetering20DActivity extends BaseActivity<ActivityMain
         dialog.setMessage("Please confirm again whether to \n remove the device");
         dialog.setOnAlertConfirmListener(() -> {
             if (!MQTTSupport.getInstance().isConnected()) {
-                ToastUtils.showToast(RemoteMainWithMetering20DActivity.this, R.string.network_error);
+                ToastUtils.showToast(RemoteMain20DActivity.this, R.string.network_error);
                 return;
             }
             showLoadingProgressDialog();
@@ -343,7 +343,7 @@ public class RemoteMainWithMetering20DActivity extends BaseActivity<ActivityMain
                 }
             }
             XLog.i(String.format("删除设备:%s", mokoDevice.name));
-            DBTools20D.getInstance(RemoteMainWithMetering20DActivity.this).deleteDevice(mokoDevice);
+            DBTools20D.getInstance(RemoteMain20DActivity.this).deleteDevice(mokoDevice);
             EventBus.getDefault().post(new DeviceDeletedEvent(mokoDevice.id));
             devices.remove(mokoDevice);
             adapter.replaceData(devices);

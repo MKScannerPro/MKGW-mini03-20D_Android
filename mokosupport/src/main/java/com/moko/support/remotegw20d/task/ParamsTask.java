@@ -39,6 +39,9 @@ public class ParamsTask extends OrderTask {
             case KEY_MANUFACTURER:
             case KEY_BLE_MAC:
             case KEY_WIFI_MAC:
+            case KEY_WIFI_FIRMWARE_VERSION:
+            case KEY_WIFI_SOFTWARE_VERSION:
+            case KEY_BLE_FIRMWARE_VERSION:
                 // ====TEST
             case KEY_PRODUCT_TEST_BUTTON_STATE:
             case KEY_PRODUCT_TEST_DEVICE_STATE:
@@ -63,16 +66,11 @@ public class ParamsTask extends OrderTask {
             case KEY_MQTT_LWT_PAYLOAD:
             case KEY_MQTT_CONNECT_MODE:
                 // WIFI
-            case KEY_WIFI_SECURITY_TYPE:
             case KEY_WIFI_SSID:
             case KEY_WIFI_PASSWORD:
-            case KEY_WIFI_EAP_TYPE:
-            case KEY_WIFI_EAP_USERNAME:
-            case KEY_WIFI_EAP_PASSWORD:
-            case KEY_WIFI_EAP_DOMAIN_ID:
-            case KEY_WIFI_EAP_VERIFY_SERVICE_ENABLE:
-            case KEY_NETWORK_DHCP:
-            case KEY_NETWORK_IP_INFO:
+            case KEY_WIFI_DHCP:
+            case KEY_WIFI_IP_INFO:
+            case KEY_COUNTRY_BRAND:
                 // OTHER
             case KEY_FILTER_RSSI:
             case KEY_FILTER_RELATIONSHIP:
@@ -87,10 +85,6 @@ public class ParamsTask extends OrderTask {
             case KEY_I_BEACON_UUID:
             case KEY_I_BEACON_AD_INTERVAL:
             case KEY_I_BEACON_TX_POWER:
-            case KEY_METERING_REPORT_ENABLE:
-            case KEY_POWER_REPORT_INTERVAL:
-            case KEY_ENERGY_REPORT_INTERVAL:
-            case KEY_LOAD_DETECTION_NOTIFY_ENABLE:
                 createGetConfigData(key.getParamsKey());
                 break;
         }
@@ -480,17 +474,6 @@ public class ParamsTask extends OrderTask {
         response.responseValue = data;
     }
 
-    public void setWifiSecurityType(@IntRange(from = 0, to = 1) int type) {
-        data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_WIFI_SECURITY_TYPE.getParamsKey(),
-                (byte) 0x01,
-                (byte) type
-        };
-        response.responseValue = data;
-    }
-
 
     public void setWifiSSID(String SSID) {
         byte[] dataBytes = SSID.getBytes();
@@ -520,82 +503,28 @@ public class ParamsTask extends OrderTask {
         response.responseValue = data;
     }
 
-    public void setWifiEapType(@IntRange(from = 0, to = 2) int type) {
-        data = new byte[]{
+    public void setCountryBrand(@IntRange(from = 0, to = 21) int country) {
+        response.responseValue = data = new byte[]{
                 (byte) 0xED,
                 (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_WIFI_EAP_TYPE.getParamsKey(),
+                (byte) ParamsKeyEnum.KEY_COUNTRY_BRAND.getParamsKey(),
                 (byte) 0x01,
-                (byte) type
+                (byte) country
         };
-        response.responseValue = data;
     }
 
-    public void setWifiEapUsername(String username) {
-        byte[] dataBytes = username.getBytes();
-        int length = dataBytes.length;
-        data = new byte[length + 4];
-        data[0] = (byte) 0xED;
-        data[1] = (byte) 0x01;
-        data[2] = (byte) ParamsKeyEnum.KEY_WIFI_EAP_USERNAME.getParamsKey();
-        data[3] = (byte) length;
-        for (int i = 0; i < dataBytes.length; i++) {
-            data[i + 4] = dataBytes[i];
-        }
-        response.responseValue = data;
-    }
-
-    public void setWifiEapPassword(String password) {
-        byte[] dataBytes = password.getBytes();
-        int length = dataBytes.length;
-        data = new byte[length + 4];
-        data[0] = (byte) 0xED;
-        data[1] = (byte) 0x01;
-        data[2] = (byte) ParamsKeyEnum.KEY_WIFI_EAP_PASSWORD.getParamsKey();
-        data[3] = (byte) length;
-        for (int i = 0; i < dataBytes.length; i++) {
-            data[i + 4] = dataBytes[i];
-        }
-        response.responseValue = data;
-    }
-
-    public void setWifiEapDomainId(String domainId) {
-        byte[] dataBytes = domainId.getBytes();
-        int length = dataBytes.length;
-        data = new byte[length + 4];
-        data[0] = (byte) 0xED;
-        data[1] = (byte) 0x01;
-        data[2] = (byte) ParamsKeyEnum.KEY_WIFI_EAP_DOMAIN_ID.getParamsKey();
-        data[3] = (byte) length;
-        for (int i = 0; i < dataBytes.length; i++) {
-            data[i + 4] = dataBytes[i];
-        }
-        response.responseValue = data;
-    }
-
-    public void setWifiEapVerifyServiceEnable(@IntRange(from = 0, to = 1) int enable) {
+    public void setWifiDHCP(@IntRange(from = 0, to = 1) int enable) {
         data = new byte[]{
                 (byte) 0xED,
                 (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_WIFI_EAP_VERIFY_SERVICE_ENABLE.getParamsKey(),
+                (byte) ParamsKeyEnum.KEY_WIFI_DHCP.getParamsKey(),
                 (byte) 0x01,
                 (byte) enable
         };
         response.responseValue = data;
     }
 
-    public void setNetworkDHCP(@IntRange(from = 0, to = 1) int enable) {
-        data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_NETWORK_DHCP.getParamsKey(),
-                (byte) 0x01,
-                (byte) enable
-        };
-        response.responseValue = data;
-    }
-
-    public void setNetworkIPInfo(String ip, String sbNetworkMask, String gateway, String dns) {
+    public void setWifiIPInfo(String ip, String sbNetworkMask, String gateway, String dns) {
         byte[] ipBytes = MokoUtils.hex2bytes(ip);
         byte[] sbNetworkMaskBytes = MokoUtils.hex2bytes(sbNetworkMask);
         byte[] gatewayBytes = MokoUtils.hex2bytes(gateway);
@@ -603,7 +532,7 @@ public class ParamsTask extends OrderTask {
         data = new byte[]{
                 (byte) 0xED,
                 (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_NETWORK_IP_INFO.getParamsKey(),
+                (byte) ParamsKeyEnum.KEY_WIFI_IP_INFO.getParamsKey(),
                 (byte) 0x10,
                 (byte) ipBytes[0],
                 (byte) ipBytes[1],
@@ -1028,70 +957,6 @@ public class ParamsTask extends OrderTask {
                 (byte) ParamsKeyEnum.KEY_I_BEACON_TX_POWER.getParamsKey(),
                 (byte) 0x01,
                 (byte) txPower
-        };
-    }
-
-    public void setMeteringReportEnable(@IntRange(from = 0, to = 1) int enable) {
-        response.responseValue = data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_METERING_REPORT_ENABLE.getParamsKey(),
-                (byte) 0x01,
-                (byte) enable
-        };
-    }
-
-    public void setPowerReportInterval(@IntRange(from = 1, to = 86400) int interval) {
-        byte[] bytes = MokoUtils.toByteArray(interval, 4);
-        response.responseValue = data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_POWER_REPORT_INTERVAL.getParamsKey(),
-                (byte) 0x04,
-                bytes[0],
-                bytes[1],
-                bytes[2],
-                bytes[3]
-        };
-    }
-
-    public void setEnergyReportInterval(@IntRange(from = 1, to = 1440) int interval) {
-        byte[] bytes = MokoUtils.toByteArray(interval, 2);
-        response.responseValue = data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_ENERGY_REPORT_INTERVAL.getParamsKey(),
-                (byte) 0x02,
-                bytes[0],
-                bytes[1]
-        };
-    }
-
-    public void setLoadDetectionNotifyEnable(@IntRange(from = 0, to = 1) int enable) {
-        response.responseValue = data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_LOAD_DETECTION_NOTIFY_ENABLE.getParamsKey(),
-                (byte) 0x01,
-                (byte) enable
-        };
-    }
-
-    public void setCurrentUtcTime() {
-        Calendar calendar = Calendar.getInstance();
-        TimeZone timeZone = TimeZone.getTimeZone("UTC");
-        calendar.setTimeZone(timeZone);
-        long utcTime = calendar.getTimeInMillis() / 1000;
-        byte[] timeBytes = ByteBuffer.allocate(8).putLong(utcTime).array();
-        response.responseValue = data = new byte[]{
-                (byte) 0xED,
-                (byte) 0x01,
-                (byte) ParamsKeyEnum.KEY_UTC_TIME.getParamsKey(),
-                (byte) 0x04,
-                timeBytes[4],
-                timeBytes[5],
-                timeBytes[6],
-                timeBytes[7]
         };
     }
 }

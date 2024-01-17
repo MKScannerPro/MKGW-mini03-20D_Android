@@ -115,7 +115,8 @@ public class DeviceScanner20DActivity extends BaseActivity<ActivityScanner20dBin
         byte[] data = map.get(new ParcelUuid(OrderServices.SERVICE_ADV.getUuid()));
         if (data == null || data.length != 1) return;
         deviceInfo.deviceType = data[0] & 0xFF;
-        if (deviceInfo.deviceType != 0x10) return;
+        // 过滤MKGW-mini 03-20D
+        if (deviceInfo.deviceType != 0x50) return;
         mDeviceMap.put(deviceInfo.mac, deviceInfo);
     }
 

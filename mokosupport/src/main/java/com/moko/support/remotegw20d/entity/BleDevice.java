@@ -20,6 +20,7 @@ public class BleDevice implements Serializable {
     //8：bxp-tag
     //9：pir
     //10：other
+    //11:mk-tof
     public int type_code;
     //值类型：number
     //0/1

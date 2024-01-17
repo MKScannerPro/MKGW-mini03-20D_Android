@@ -12,12 +12,9 @@ public class MQTTConstants {
     public static final int CONFIG_MSG_ID_COMMUNICATION_TIMEOUT = 1010;
     public static final int CONFIG_MSG_ID_INDICATOR_STATUS = 1011;
     public static final int CONFIG_MSG_ID_RESET = 1013;
-    public static final int CONFIG_MSG_ID_OUTPUT_SWITCH = 1015;
-    public static final int CONFIG_MSG_ID_OUTPUT_CONTROL = 1016;
-    public static final int CONFIG_MSG_ID_OTA_BLE = 1017;
+    public static final int CONFIG_MSG_ID_OTA_BLE = 1015;
     public static final int CONFIG_MSG_ID_WIFI_SETTINGS = 1020;
-    public static final int CONFIG_MSG_ID_WIFI_CERT_FILE = 1021;
-    public static final int CONFIG_MSG_ID_NETWORK_SETTINGS = 1023;
+    public static final int CONFIG_MSG_ID_NETWORK_SETTINGS = 1021;
     public static final int CONFIG_MSG_ID_MQTT_SETTINGS = 1030;
     public static final int CONFIG_MSG_ID_MQTT_CERT_FILE = 1031;
     public static final int CONFIG_MSG_ID_SCAN_CONFIG = 1040;
@@ -35,6 +32,7 @@ public class MQTTConstants {
     public static final int CONFIG_MSG_ID_FILTER_BXP_BUTTON = 1053;
     public static final int CONFIG_MSG_ID_FILTER_BXP_TAG = 1054;
     public static final int CONFIG_MSG_ID_FILTER_PIR = 1055;
+    public static final int CONFIG_MSG_ID_FILTER_TOF = 1062;
     public static final int CONFIG_MSG_ID_FILTER_OTHER = 1056;
     public static final int CONFIG_MSG_ID_DUPLICATE_DATA_FILTER = 1057;
     public static final int CONFIG_MSG_ID_DATA_REPORT_TIMEOUT = 1058;
@@ -52,12 +50,6 @@ public class MQTTConstants {
     public static final int CONFIG_MSG_ID_BLE_OTHER_CHANGE_NOTIFY_ENABLE = 1305;
     public static final int CONFIG_MSG_ID_BLE_OTHER_READ_CHAR_VALUE = 1307;
     public static final int CONFIG_MSG_ID_BLE_OTHER_WRITE_CHAR_VALUE = 1309;
-    //powerMetering
-    public static final int CONFIG_MSG_ID_POWER_METERING_ENABLE = 1080;
-    public static final int CONFIG_MSG_ID_POWER_REPORT_INTERVAL = 1081;
-    public static final int CONFIG_MSG_ID_ENERGY_REPORT_INTERVAL = 1083;
-    public static final int CONFIG_MSG_ID_LOAD_CHANGE_ENABLE = 1085;
-    public static final int CONFIG_MSG_ID_RESET_ENERGY_DATA = 1087;
 
     public static final int CONFIG_MSG_ID_BLE_BXP_BUTTON_LED = 1109;
     public static final int CONFIG_MSG_ID_BLE_BXP_BUTTON_BUZZER = 1111;
@@ -72,10 +64,8 @@ public class MQTTConstants {
     public static final int READ_MSG_ID_COMMUNICATION_TIMEOUT = 2010;
     public static final int READ_MSG_ID_INDICATOR_STATUS = 2011;
     public static final int READ_MSG_ID_DEVICE_STATUS = 2012;
-    public static final int READ_MSG_ID_OUTPUT_SWITCH = 2015;
-    public static final int READ_MSG_ID_OUTPUT_CONTROL = 2016;
     public static final int READ_MSG_ID_WIFI_SETTINGS = 2020;
-    public static final int READ_MSG_ID_NETWORK_SETTINGS = 2023;
+    public static final int READ_MSG_ID_NETWORK_SETTINGS = 2021;
     public static final int READ_MSG_ID_MQTT_SETTINGS = 2030;
     public static final int READ_MSG_ID_SCAN_CONFIG = 2040;
     public static final int READ_MSG_ID_FILTER_RELATIONSHIP = 2041;
@@ -90,6 +80,7 @@ public class MQTTConstants {
     public static final int READ_MSG_ID_FILTER_BXP_BUTTON = 2053;
     public static final int READ_MSG_ID_FILTER_BXP_TAG = 2054;
     public static final int READ_MSG_ID_FILTER_PIR = 2055;
+    public static final int READ_MSG_ID_FILTER_TOF = 2062;
     public static final int READ_MSG_ID_FILTER_OTHER = 2056;
     public static final int READ_MSG_ID_DUPLICATE_DATA_FILTER = 2057;
     public static final int READ_MSG_ID_DATA_REPORT_TIMEOUT = 2058;
@@ -97,21 +88,13 @@ public class MQTTConstants {
     public static final int READ_MSG_ID_FILTER_PHY = 2060;
     public static final int READ_MSG_ID_BEACON_PARAMS = 2061;
     public static final int READ_MSG_ID_BLE_CONNECTED_LIST = 2201;
-    //powerMetering
-    public static final int READ_MSG_ID_POWER_METERING_ENABLE = 2080;
-    public static final int READ_MSG_ID_POWER_REPORT_INTERVAL = 2081;
-    public static final int READ_MSG_ID_POWER_DATA = 2082;
-    public static final int READ_MSG_ID_ENERGY_REPORT_INTERVAL = 2083;
-    public static final int READ_MSG_ID_ENERGY_DATA = 2084;
-    public static final int READ_MSG_ID_LOAD_CHANGE_ENABLE = 2085;
 
 
     // NOTIFY
     public static final int NOTIFY_MSG_ID_NETWORKING_STATUS = 3004;
     public static final int NOTIFY_MSG_ID_OTA_RESULT = 3007;
     public static final int NOTIFY_MSG_ID_BUTTON_RESET = 3014;
-    public static final int NOTIFY_MSG_ID_OTA_BLE_RESULT = 3018;
-    public static final int NOTIFY_MSG_ID_WIFI_CERT_RESULT = 3022;
+    public static final int NOTIFY_MSG_ID_OTA_BLE_RESULT = 3016;
     public static final int NOTIFY_MSG_ID_MQTT_CERT_RESULT = 3032;
     public static final int NOTIFY_MSG_ID_BLE_SCAN_RESULT = 3070;
     public static final int NOTIFY_MSG_ID_BLE_BXP_BUTTON_CONNECT_RESULT = 3101;
@@ -129,10 +112,6 @@ public class MQTTConstants {
     public static final int NOTIFY_MSG_ID_BLE_OTHER_WRITE_CHAR_VALUE = 3310;
     public static final int NOTIFY_MSG_ID_BLE_OTHER_NOTIFY_CHAR_VALUE = 3311;
     public static final int NOTIFY_MSG_ID_OFFLINE = 3999;
-
-    public static final int NOTIFY_MSG_ID_POWER_DATA = 3082;
-    public static final int NOTIFY_MSG_ID_ENERGY_DATA = 3084;
-    public static final int NOTIFY_MSG_ID_LOAD_CHANGE_ENABLE = 3086;
 
     public static final int NOTIFY_MSG_ID_BLE_BXP_BUTTON_LED = 3110;
     public static final int NOTIFY_MSG_ID_BLE_BXP_BUTTON_BUZZER = 3112;

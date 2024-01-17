@@ -34,8 +34,6 @@ public class IndicatorSetting20DActivity extends BaseActivity<ActivityIndicatorS
     private MokoDevice mMokoDevice;
     private MQTTConfig appMqttConfig;
     private String mAppTopic;
-    private int bleBroadcastEnable;
-    private int bleConnectedEnable;
     private int serverConnectingEnable;
     private int serverConnectedEnable;
     public Handler mHandler;
@@ -84,12 +82,8 @@ public class IndicatorSetting20DActivity extends BaseActivity<ActivityIndicatorS
                 return;
             dismissLoadingProgressDialog();
             mHandler.removeMessages(0);
-            bleBroadcastEnable = result.data.get("ble_adv_led").getAsInt();
-            bleConnectedEnable = result.data.get("ble_connected_led").getAsInt();
             serverConnectingEnable = result.data.get("server_connecting_led").getAsInt();
             serverConnectedEnable = result.data.get("server_connected_led").getAsInt();
-            mBind.cbBleConnected.setChecked(bleConnectedEnable == 1);
-            mBind.cbBleBroadcast.setChecked(bleBroadcastEnable == 1);
             mBind.cbServerConnecting.setChecked(serverConnectingEnable == 1);
             mBind.cbServerConnected.setChecked(serverConnectedEnable == 1);
         }
@@ -121,13 +115,9 @@ public class IndicatorSetting20DActivity extends BaseActivity<ActivityIndicatorS
 
     private void setIndicatorStatus() {
         int msgId = MQTTConstants.CONFIG_MSG_ID_INDICATOR_STATUS;
-        bleBroadcastEnable = mBind.cbBleBroadcast.isChecked() ? 1 : 0;
-        bleConnectedEnable = mBind.cbBleConnected.isChecked() ? 1 : 0;
         serverConnectingEnable = mBind.cbServerConnecting.isChecked() ? 1 : 0;
         serverConnectedEnable = mBind.cbServerConnected.isChecked() ? 1 : 0;
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("ble_adv_led", bleBroadcastEnable);
-        jsonObject.addProperty("ble_connected_led", bleConnectedEnable);
         jsonObject.addProperty("server_connecting_led", serverConnectingEnable);
         jsonObject.addProperty("server_connected_led", serverConnectedEnable);
         String message = assembleWriteCommonData(msgId, mMokoDevice.mac, jsonObject);

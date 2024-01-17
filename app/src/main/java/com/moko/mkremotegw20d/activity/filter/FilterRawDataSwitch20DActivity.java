@@ -99,6 +99,7 @@ public class FilterRawDataSwitch20DActivity extends BaseActivity<ActivityFilterR
             mBind.tvFilterByBxpButton.setText(result.data.get("bxp_button").getAsInt() == 1 ? "ON" : "OFF");
             mBind.tvFilterByBxpTag.setText(result.data.get("bxp_tag").getAsInt() == 1 ? "ON" : "OFF");
             mBind.tvFilterByPir.setText(result.data.get("pir").getAsInt() == 1 ? "ON" : "OFF");
+            mBind.tvFilterByTof.setText(result.data.get("mk_tof").getAsInt() == 1 ? "ON" : "OFF");
             mBind.tvFilterByOther.setText(result.data.get("other").getAsInt() == 1 ? "ON" : "OFF");
         }
         if (msg_id == MQTTConstants.CONFIG_MSG_ID_FILTER_BXP_DEVICE_INFO
@@ -291,6 +292,18 @@ public class FilterRawDataSwitch20DActivity extends BaseActivity<ActivityFilterR
             return;
         }
         Intent i = new Intent(this, FilterPIR20DActivity.class);
+        i.putExtra(AppConstants.EXTRA_KEY_DEVICE, mMokoDevice);
+        startFilterDetail.launch(i);
+    }
+
+    public void onFilterByMKTOF(View view) {
+        if (isWindowLocked())
+            return;
+        if (!MQTTSupport.getInstance().isConnected()) {
+            ToastUtils.showToast(this, R.string.network_error);
+            return;
+        }
+        Intent i = new Intent(this, FilterMKTOF20DActivity.class);
         i.putExtra(AppConstants.EXTRA_KEY_DEVICE, mMokoDevice);
         startFilterDetail.launch(i);
     }

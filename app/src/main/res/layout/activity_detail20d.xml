@@ -39,38 +39,21 @@
             android:src="@drawable/more" />
     </RelativeLayout>
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="12dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_corner_btn_bg"
-            android:gravity="center"
-            android:onClick="onScannerOptionSetting"
-            android:text="Filter and Upload"
-            android:textColor="@color/white_ffffff"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="12dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_corner_btn_bg"
-            android:gravity="center"
-            android:onClick="onPowerMeteringSetting"
-            android:text="Power Metering"
-            android:textColor="@color/white_ffffff"
-            android:textSize="15sp" />
-    </LinearLayout>
+        android:background="@drawable/shape_corner_btn_bg"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onScannerOptionSetting"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Scanner and Upload option"
+        android:textColor="@color/white_ffffff"
+        android:textSize="15sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

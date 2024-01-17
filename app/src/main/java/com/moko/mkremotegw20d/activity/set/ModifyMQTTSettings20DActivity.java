@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.R;
-import com.moko.mkremotegw20d.activity.RemoteMainWithMetering20DActivity;
+import com.moko.mkremotegw20d.activity.RemoteMain20DActivity;
 import com.moko.mkremotegw20d.adapter.MQTTFragmentAdapter;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityMqttDeviceModify20dBinding;
@@ -111,7 +111,7 @@ public class ModifyMQTTSettings20DActivity extends BaseActivity<ActivityMqttDevi
         });
         mBind.vpMqtt.setOffscreenPageLimit(4);
         mBind.rgMqtt.setOnCheckedChangeListener(this);
-        expertFilePath = RemoteMainWithMetering20DActivity.PATH_LOGCAT + File.separator + "export" + File.separator + "Settings for Device.xlsx";
+        expertFilePath = RemoteMain20DActivity.PATH_LOGCAT + File.separator + "export" + File.separator + "Settings for Device.xlsx";
         mMokoDevice = (MokoDevice) getIntent().getSerializableExtra(AppConstants.EXTRA_KEY_DEVICE);
         String mqttConfigAppStr = SPUtiles.getStringValue(this, AppConstants.SP_KEY_MQTT_CONFIG_APP, "");
         appMqttConfig = new Gson().fromJson(mqttConfigAppStr, MQTTConfig.class);

@@ -79,10 +79,11 @@ public class DeviceInfo20DActivity extends BaseActivity<ActivityDeviceInformatio
             mBind.tvProductModel.setText(result.data.get("product_model").getAsString());
             mBind.tvManufacturer.setText(result.data.get("company_name").getAsString());
             mBind.tvDeviceHardwareVersion.setText(result.data.get("hardware_version").getAsString());
-            mBind.tvDeviceSoftwareVersion.setText(result.data.get("software_version").getAsString());
-            mBind.tvDeviceFirmwareVersion.setText(result.data.get("firmware_version").getAsString());
-            mBind.tvDeviceStaMac.setText(result.device_info.mac.toUpperCase());
-            mBind.tvDeviceBtMac.setText(result.data.get("ble_mac").getAsString().toUpperCase());
+            mBind.tvDeviceSoftwareVersion.setText(result.data.get("master_software_version").getAsString());
+            mBind.tvWifiFirmwareVersion.setText(result.data.get("master_firmware_version").getAsString());
+            mBind.tvBtFirmwareVersion.setText(result.data.get("slave_firmware_version").getAsString());
+            mBind.tvWifiMac.setText(result.device_info.mac.toUpperCase());
+            mBind.tvBtMac.setText(result.data.get("ble_mac").getAsString().toUpperCase());
         }
     }
 

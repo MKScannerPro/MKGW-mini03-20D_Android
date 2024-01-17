@@ -57,7 +57,7 @@ public class ModifyName20DActivity extends BaseActivity<ActivityModifyDeviceName
         device.name = name;
         DBTools20D.getInstance(this).updateDevice(device);
         // 跳转首页，刷新数据
-        Intent intent = new Intent(this, RemoteMainWithMetering20DActivity.class);
+        Intent intent = new Intent(this, RemoteMain20DActivity.class);
         intent.putExtra(AppConstants.EXTRA_KEY_FROM_ACTIVITY, TAG);
         intent.putExtra(AppConstants.EXTRA_KEY_MAC, device.mac);
         startActivity(intent);

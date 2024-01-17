@@ -275,17 +275,6 @@ public class DeviceDetail20DActivity extends BaseActivity<ActivityDetail20dBindi
         startActivity(intent);
     }
 
-    public void onPowerMeteringSetting(View view){
-        if (isWindowLocked()) return;
-        if (!MQTTSupport.getInstance().isConnected()) {
-            ToastUtils.showToast(this, R.string.network_error);
-            return;
-        }
-        Intent i = new Intent(this, PowerMetering20DActivity.class);
-        i.putExtra(AppConstants.EXTRA_KEY_DEVICE, mMokoDevice);
-        startActivity(i);
-    }
-
     public void onScannerOptionSetting(View view) {
         if (isWindowLocked()) return;
         // 获取扫描过滤

@@ -63,68 +63,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Security"
-                android:textColor="@color/black_333333"
-                android:textSize="15sp"
-                app:layout_constraintBaseline_toBaselineOf="@id/tv_security"
-                app:layout_constraintLeft_toLeftOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_security"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_radius_blue_btn_bg"
-                android:clickable="true"
-                android:gravity="center"
-                android:minWidth="170dp"
-                android:minHeight="40dp"
-                android:onClick="onSelectSecurity"
-                android:text="Personal"
-                android:textColor="@color/white_ffffff"
-                android:textSize="15sp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_eap_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_security"
-                tools:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="EAP type"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/tv_eap_type"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_eap_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_radius_blue_btn_bg"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:minWidth="170dp"
-                    android:minHeight="40dp"
-                    android:onClick="onSelectEAPType"
-                    android:text="PEAP-MSCHAPV2"
-                    android:textColor="@color/white_ffffff"
-                    android:textSize="15sp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="SSID"
                 android:textColor="@color/black_333333"
                 android:textSize="15sp"
@@ -135,7 +73,6 @@
                 android:id="@+id/et_ssid"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:hint="1-32 Characters"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -146,7 +83,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_eap_type"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.65" />
 
 
@@ -187,267 +124,202 @@
                     app:layout_constraintWidth_percent="0.65" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_username"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/layoutCountry"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_password"
-                tools:visibility="gone">
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/cl_password">
 
                 <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/country_brand"
+                    android:textColor="@color/black_333333"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvCountryBrand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EAP Username"
-                    android:textColor="@color/black_333333"
+                    android:background="@drawable/shape_radius_blue_btn_bg"
+                    android:gravity="center"
+                    android:minWidth="170dp"
+                    android:minHeight="40dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/white_ffffff"
                     android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/et_username"
-                    app:layout_constraintLeft_toLeftOf="parent" />
+                    tools:text="Korea、US" />
+            </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_username"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="0-32 Characters"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black_333333"
-                    android:textColorHint="@color/grey_ebebeb"
-                    android:textSize="15sp"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.65" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_eap_password"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/ll_dhcp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_username"
-                tools:visibility="gone">
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/layoutCountry">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="DHCP"
+                        android:textColor="@color/black_333333"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/img_dhcp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/checkbox_open" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_ip"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="EAP Password"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/et_eap_password"
-                    app:layout_constraintLeft_toLeftOf="parent" />
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:visibility="gone"
+                    tools:visibility="gone">
 
-                <EditText
-                    android:id="@+id/et_eap_password"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="0-64 Characters"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black_333333"
-                    android:textColorHint="@color/grey_ebebeb"
-                    android:textSize="15sp"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.65" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IP"
+                        android:textColor="@color/black_333333"
+                        android:textSize="15sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_ip"
+                        app:layout_constraintLeft_toLeftOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_domain_id"
-                android:layout_width="0dp"
+                    <EditText
+                        android:id="@+id/et_ip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789."
+                        android:maxLength="15"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black_333333"
+                        android:textColorHint="@color/grey_ebebeb"
+                        android:textSize="15sp"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent="0.8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mask"
+                        android:textColor="@color/black_333333"
+                        android:textSize="15sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_mask"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_mask"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:digits="0123456789."
+                        android:maxLength="15"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black_333333"
+                        android:textColorHint="@color/grey_ebebeb"
+                        android:textSize="15sp"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_ip"
+                        app:layout_constraintWidth_percent="0.8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gateway"
+                        android:textColor="@color/black_333333"
+                        android:textSize="15sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_gateway"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_gateway"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:digits="0123456789."
+                        android:maxLength="15"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black_333333"
+                        android:textColorHint="@color/grey_ebebeb"
+                        android:textSize="15sp"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_mask"
+                        app:layout_constraintWidth_percent="0.8" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DNS"
+                        android:textColor="@color/black_333333"
+                        android:textSize="15sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/et_dns"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_dns"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:digits="0123456789."
+                        android:maxLength="15"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black_333333"
+                        android:textColorHint="@color/grey_ebebeb"
+                        android:textSize="15sp"
+                        app:layout_constraintHorizontal_bias="1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_gateway"
+                        app:layout_constraintWidth_percent="0.8" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_eap_password"
-                tools:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Domain ID"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@id/et_domain_id"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <EditText
-                    android:id="@+id/et_domain_id"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="0-64 Characters"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black_333333"
-                    android:textColorHint="@color/grey_ebebeb"
-                    android:textSize="15sp"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent="0.65" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <CheckBox
-                android:id="@+id/cb_verify_server"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:button="@null"
-                android:checked="false"
-                android:drawableRight="@drawable/selector_cb_btn"
-                android:text="Verify server"
+                android:layout_marginTop="20dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="Please note the country\u0026Band is a configuration for 5GHZ WiFi,if using 2.4GHz WiFi, there is no need to choose the band."
                 android:textColor="@color/black_333333"
-                android:textSize="15sp"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_eap_password"
-                tools:visibility="gone" />
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@id/ll_dhcp" />
 
-            <LinearLayout
-                android:id="@+id/ll_ca"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cb_verify_server"
-                tools:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CA certificate"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_ca_file"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.0"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="3"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text=""
-                    android:textColor="@color/black_333333"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/iv_select_ca_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    android:onClick="selectCAFile"
-                    android:src="@drawable/select_file" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_cert"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_ca"
-                tools:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Client certificate"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_cert_file"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.0"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="3"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text=""
-                    android:textColor="@color/black_333333"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/iv_select_cert_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    android:onClick="selectCertFile"
-                    android:src="@drawable/select_file" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_key"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_cert"
-                tools:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Client key"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_key_file"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1.0"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="3"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text=""
-                    android:textColor="@color/black_333333"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/iv_select_key_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    android:onClick="selectKeyFile"
-                    android:src="@drawable/select_file" />
-            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </LinearLayout>

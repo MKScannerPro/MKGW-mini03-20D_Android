@@ -47,8 +47,10 @@
     <string name="device_info_hardware_version">Hardware Version</string>
     <string name="device_info_software_version">Software Version</string>
     <string name="device_info_firmware_version">Firmware Version</string>
-    <string name="device_info_sta_mac">WIFI MAC address</string>
-    <string name="device_info_bt_mac">BLE MAC address</string>
+    <string name="device_info_wifi_firmware_version">WIFI Firmware Version</string>
+    <string name="device_info_bt_firmware_version">BT Firmware Version</string>
+    <string name="device_info_wifi_mac">WIFI MAC</string>
+    <string name="device_info_bt_mac">BT MAC</string>
 
     <string name="permission_storage_close_content">Please find it in cellphone setting- permission, and allow MKRemoteGW20D use the Storage and location permission</string>
     <string name="permission_ble_close_content">Please find it in cellphone setting- permission, and allow MKRemoteGW20D use the bluetooth and location permission</string>
@@ -74,7 +76,6 @@
     <string name="network_settings">Network Settings</string>
     <string name="scanner_filter">Scanner Filter</string>
     <string name="advertise_iBeacon">Advertise iBeacon</string>
-    <string name="metering_settings">Metering Settings</string>
     <string name="device_information">Device Information</string>
     <string name="indicator_settings">Indicator settings</string>
     <string name="network_status_report_interval">Network status report interval</string>

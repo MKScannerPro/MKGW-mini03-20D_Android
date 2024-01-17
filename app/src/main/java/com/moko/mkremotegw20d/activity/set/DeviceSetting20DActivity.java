@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.R;
 import com.moko.mkremotegw20d.activity.DataReportTimeout20DActivity;
-import com.moko.mkremotegw20d.activity.RemoteMainWithMetering20DActivity;
+import com.moko.mkremotegw20d.activity.RemoteMain20DActivity;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityDeviceSetting20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
@@ -54,8 +54,6 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
     private String mAppTopic;
     private Handler mHandler;
     private InputFilter filter;
-    private boolean isOutputSwitch;
-    private boolean isOutputControl;
 
     @Override
     protected void onCreate() {
@@ -70,12 +68,6 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
         appMqttConfig = new Gson().fromJson(mqttConfigAppStr, MQTTConfig.class);
         mAppTopic = TextUtils.isEmpty(appMqttConfig.topicPublish) ? mMokoDevice.topicSubscribe : appMqttConfig.topicPublish;
         mHandler = new Handler(Looper.getMainLooper());
-        mHandler.postDelayed(() -> {
-            dismissLoadingProgressDialog();
-            finish();
-        }, 30 * 1000);
-        showLoadingProgressDialog();
-        getSwitchState(MQTTConstants.READ_MSG_ID_OUTPUT_SWITCH);
     }
 
     @Override
@@ -98,44 +90,6 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
             e.printStackTrace();
             return;
         }
-        if (msg_id == MQTTConstants.READ_MSG_ID_OUTPUT_SWITCH || msg_id == MQTTConstants.READ_MSG_ID_OUTPUT_CONTROL) {
-            Type type = new TypeToken<MsgReadResult<JsonObject>>() {
-            }.getType();
-            MsgReadResult<JsonObject> result = new Gson().fromJson(message, type);
-            if (!mMokoDevice.mac.equalsIgnoreCase(result.device_info.mac)) return;
-            int enable = result.data.get("switch_value").getAsInt();
-            if (msg_id == MQTTConstants.READ_MSG_ID_OUTPUT_SWITCH) {
-                isOutputSwitch = enable == 1;
-                getSwitchState(MQTTConstants.READ_MSG_ID_OUTPUT_CONTROL);
-                mBind.imgOutputSwitch.setImageResource(enable == 1 ? R.drawable.checkbox_open : R.drawable.checkbox_close);
-            } else {
-                dismissLoadingProgressDialog();
-                mHandler.removeMessages(0);
-                isOutputControl = enable == 1;
-                mBind.imgOutputControl.setImageResource(enable == 1 ? R.drawable.checkbox_open : R.drawable.checkbox_close);
-            }
-        }
-        if (msg_id == MQTTConstants.CONFIG_MSG_ID_OUTPUT_SWITCH || msg_id == MQTTConstants.CONFIG_MSG_ID_OUTPUT_CONTROL) {
-            Type type = new TypeToken<MsgConfigResult>() {
-            }.getType();
-            MsgConfigResult result = new Gson().fromJson(message, type);
-            if (!mMokoDevice.mac.equalsIgnoreCase(result.device_info.mac)) return;
-            dismissLoadingProgressDialog();
-            mHandler.removeMessages(0);
-            if (result.result_code == 0) {
-                if (msg_id == MQTTConstants.CONFIG_MSG_ID_OUTPUT_SWITCH) {
-                    isOutputSwitch = !isOutputSwitch;
-                    mBind.imgOutputSwitch.setImageResource(isOutputSwitch ? R.drawable.checkbox_open : R.drawable.checkbox_close);
-                } else {
-                    isOutputControl = !isOutputControl;
-                    mBind.imgOutputControl.setImageResource(isOutputControl ? R.drawable.checkbox_open : R.drawable.checkbox_close);
-                }
-                ToastUtils.showToast(this, "Set up succeed");
-            } else {
-                ToastUtils.showToast(this, "Set up failed");
-            }
-        }
-
         if (msg_id == MQTTConstants.CONFIG_MSG_ID_REBOOT) {
             Type type = new TypeToken<MsgConfigResult>() {
             }.getType();
@@ -177,7 +131,7 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
                 mBind.tvName.postDelayed(() -> {
                     dismissLoadingProgressDialog();
                     // 跳转首页，刷新数据
-                    Intent intent = new Intent(this, RemoteMainWithMetering20DActivity.class);
+                    Intent intent = new Intent(this, RemoteMain20DActivity.class);
                     intent.putExtra(AppConstants.EXTRA_KEY_FROM_ACTIVITY, TAG);
                     startActivity(intent);
                 }, 500);
@@ -318,35 +272,6 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
         startActivity(i);
     }
 
-    public void onOutputSwitch(View view) {
-        showLoadingProgressDialog();
-        mHandler.postDelayed(() -> {
-            dismissLoadingProgressDialog();
-            ToastUtils.showToast(this, "set up failed");
-        }, 30 * 1000);
-        setSwitchState(MQTTConstants.CONFIG_MSG_ID_OUTPUT_SWITCH, !isOutputSwitch ? 1 : 0);
-    }
-
-    public void onOutputControl(View view) {
-        showLoadingProgressDialog();
-        mHandler.postDelayed(() -> {
-            dismissLoadingProgressDialog();
-            ToastUtils.showToast(this, "set up failed");
-        }, 30 * 1000);
-        setSwitchState(MQTTConstants.CONFIG_MSG_ID_OUTPUT_CONTROL, !isOutputControl ? 1 : 0);
-    }
-
-    private void setSwitchState(int msgId, int value) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("switch_value", value);
-        String message = assembleWriteCommonData(msgId, mMokoDevice.mac, jsonObject);
-        try {
-            MQTTSupport.getInstance().publish(mAppTopic, message, msgId, appMqttConfig.qos);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void onOTA(View view) {
         if (isWindowLocked()) return;
         if (!MQTTSupport.getInstance().isConnected()) {
@@ -450,15 +375,6 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("factory_reset", 0);
         String message = assembleWriteCommonData(msgId, mMokoDevice.mac, jsonObject);
-        try {
-            MQTTSupport.getInstance().publish(mAppTopic, message, msgId, appMqttConfig.qos);
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getSwitchState(int msgId) {
-        String message = assembleReadCommon(msgId, mMokoDevice.mac);
         try {
             MQTTSupport.getInstance().publish(mAppTopic, message, msgId, appMqttConfig.qos);
         } catch (MqttException e) {

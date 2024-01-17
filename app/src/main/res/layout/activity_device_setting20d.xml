@@ -170,60 +170,6 @@
                 android:textColor="@color/black_333333"
                 android:textSize="15sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white_ffffff"
-                android:gravity="center_vertical"
-                android:onClick="onOutputSwitch"
-                android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Output switch"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@+id/imgOutputSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/checkbox_close" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white_ffffff"
-                android:gravity="center_vertical"
-                android:onClick="onOutputControl"
-                android:orientation="horizontal"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp">
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Output control by button"
-                    android:textColor="@color/black_333333"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@+id/imgOutputControl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/checkbox_close" />
-            </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -258,7 +204,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white_ffffff"
                 android:clickable="true"
                 android:drawableRight="@drawable/arrow_right"

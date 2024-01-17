@@ -102,7 +102,7 @@ public class MqttSettings20DActivity extends BaseActivity<ActivityMqttDevice20dB
         });
         mBind.vpMqtt.setOffscreenPageLimit(4);
         mBind.rgMqtt.setOnCheckedChangeListener(this);
-        expertFilePath = RemoteMainWithMetering20DActivity.PATH_LOGCAT + File.separator + "export" + File.separator + "Settings for Device.xlsx";
+        expertFilePath = RemoteMain20DActivity.PATH_LOGCAT + File.separator + "export" + File.separator + "Settings for Device.xlsx";
         showLoadingProgressDialog();
         mBind.title.postDelayed(() -> {
             ArrayList<OrderTask> orderTasks = new ArrayList<>();

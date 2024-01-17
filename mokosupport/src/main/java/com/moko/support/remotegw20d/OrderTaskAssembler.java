@@ -3,11 +3,9 @@ package com.moko.support.remotegw20d;
 import com.moko.ble.lib.task.OrderTask;
 import com.moko.support.remotegw20d.entity.ParamsKeyEnum;
 import com.moko.support.remotegw20d.entity.ParamsLongKeyEnum;
-import com.moko.support.remotegw20d.task.GetFirmwareRevisionTask;
 import com.moko.support.remotegw20d.task.GetHardwareRevisionTask;
 import com.moko.support.remotegw20d.task.GetManufacturerNameTask;
 import com.moko.support.remotegw20d.task.GetModelNumberTask;
-import com.moko.support.remotegw20d.task.GetSoftwareRevisionTask;
 import com.moko.support.remotegw20d.task.ParamsTask;
 import com.moko.support.remotegw20d.task.SetPasswordTask;
 
@@ -35,14 +33,10 @@ public class OrderTaskAssembler {
         return getHardwareVersionTask;
     }
 
-    public static OrderTask getFirmwareVersion() {
-        GetFirmwareRevisionTask getFirmwareVersionTask = new GetFirmwareRevisionTask();
-        return getFirmwareVersionTask;
-    }
-
-    public static OrderTask getSoftwareVersion() {
-        GetSoftwareRevisionTask getSoftwareVersionTask = new GetSoftwareRevisionTask();
-        return getSoftwareVersionTask;
+    public static OrderTask getWifiSoftwareVersion() {
+        ParamsTask task = new ParamsTask();
+        task.setData(ParamsKeyEnum.KEY_WIFI_SOFTWARE_VERSION);
+        return task;
     }
 
     public static OrderTask getDeviceName() {
@@ -69,12 +63,22 @@ public class OrderTaskAssembler {
 //        return task;
 //    }
 
+    public static OrderTask getBleFirmwareVersion() {
+        ParamsTask task = new ParamsTask();
+        task.setData(ParamsKeyEnum.KEY_BLE_FIRMWARE_VERSION);
+        return task;
+    }
     public static OrderTask getBleMac() {
         ParamsTask task = new ParamsTask();
         task.setData(ParamsKeyEnum.KEY_BLE_MAC);
         return task;
     }
 
+    public static OrderTask getWifiFirmwareVersion() {
+        ParamsTask task = new ParamsTask();
+        task.setData(ParamsKeyEnum.KEY_WIFI_FIRMWARE_VERSION);
+        return task;
+    }
     public static OrderTask getWifiMac() {
         ParamsTask task = new ParamsTask();
         task.setData(ParamsKeyEnum.KEY_WIFI_MAC);
@@ -220,11 +224,6 @@ public class OrderTaskAssembler {
         return task;
     }
 
-    public static OrderTask getWifiSecurityType() {
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_SECURITY_TYPE);
-        return task;
-    }
 
     public static OrderTask getWifiSSID() {
         ParamsTask task = new ParamsTask();
@@ -238,45 +237,21 @@ public class OrderTaskAssembler {
         return task;
     }
 
-    public static OrderTask getWifiEapType() {
+    public static OrderTask getCountry() {
         ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_EAP_TYPE);
+        task.setData(ParamsKeyEnum.KEY_COUNTRY_BRAND);
         return task;
     }
 
-    public static OrderTask getWifiEapUsername() {
+    public static OrderTask getWifiDHCP() {
         ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_EAP_USERNAME);
+        task.setData(ParamsKeyEnum.KEY_WIFI_DHCP);
         return task;
     }
 
-    public static OrderTask getWifiEapPassword() {
+    public static OrderTask getWifiIPInfo() {
         ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_EAP_PASSWORD);
-        return task;
-    }
-
-    public static OrderTask getWifiEapDomainId() {
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_EAP_DOMAIN_ID);
-        return task;
-    }
-
-    public static OrderTask getWifiEapVerifyServiceEnable() {
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_WIFI_EAP_VERIFY_SERVICE_ENABLE);
-        return task;
-    }
-
-    public static OrderTask getNetworkDHCP() {
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_NETWORK_DHCP);
-        return task;
-    }
-
-    public static OrderTask getNetworkIPInfo() {
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_NETWORK_IP_INFO);
+        task.setData(ParamsKeyEnum.KEY_WIFI_IP_INFO);
         return task;
     }
 
@@ -361,30 +336,6 @@ public class OrderTaskAssembler {
     public static OrderTask getIBeaconTxPower() {
         ParamsTask task = new ParamsTask();
         task.setData(ParamsKeyEnum.KEY_I_BEACON_TX_POWER);
-        return task;
-    }
-
-    public static OrderTask getMeteringReportEnable(){
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_METERING_REPORT_ENABLE);
-        return task;
-    }
-
-    public static OrderTask getPowerReportInterval(){
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_POWER_REPORT_INTERVAL);
-        return task;
-    }
-
-    public static OrderTask getEnergyReportInterval(){
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_ENERGY_REPORT_INTERVAL);
-        return task;
-    }
-
-    public static OrderTask getLoadDetectionNotifyEnable(){
-        ParamsTask task = new ParamsTask();
-        task.setData(ParamsKeyEnum.KEY_LOAD_DETECTION_NOTIFY_ENABLE);
         return task;
     }
 
@@ -574,12 +525,6 @@ public class OrderTaskAssembler {
         return task;
     }
 
-    public static OrderTask setWifiSecurityType(@IntRange(from = 0, to = 1) int type) {
-        ParamsTask task = new ParamsTask();
-        task.setWifiSecurityType(type);
-        return task;
-    }
-
 
     public static OrderTask setWifiSSID(String SSID) {
         ParamsTask task = new ParamsTask();
@@ -593,45 +538,21 @@ public class OrderTaskAssembler {
         return task;
     }
 
-    public static OrderTask setWifiEapType(@IntRange(from = 0, to = 2) int type) {
+    public static OrderTask setWifiDHCP(@IntRange(from = 0, to = 1) int enable) {
         ParamsTask task = new ParamsTask();
-        task.setWifiEapType(type);
+        task.setWifiDHCP(enable);
         return task;
     }
 
-    public static OrderTask setWifiEapUsername(String username) {
+    public static OrderTask setWifiIPInfo(String ip, String sbNetworkMask, String gateway, String dns) {
         ParamsTask task = new ParamsTask();
-        task.setWifiEapUsername(username);
+        task.setWifiIPInfo(ip, sbNetworkMask, gateway, dns);
         return task;
     }
 
-    public static OrderTask setWifiEapPassword(String password) {
+    public static OrderTask setCountryBrand(@IntRange(from = 0, to = 21) int country) {
         ParamsTask task = new ParamsTask();
-        task.setWifiEapPassword(password);
-        return task;
-    }
-
-    public static OrderTask setWifiEapDomainId(String domainId) {
-        ParamsTask task = new ParamsTask();
-        task.setWifiEapDomainId(domainId);
-        return task;
-    }
-
-    public static OrderTask setWifiEapVerifyServiceEnable(@IntRange(from = 0, to = 1) int enable) {
-        ParamsTask task = new ParamsTask();
-        task.setWifiEapVerifyServiceEnable(enable);
-        return task;
-    }
-
-    public static OrderTask setNetworkDHCP(@IntRange(from = 0, to = 1) int enable) {
-        ParamsTask task = new ParamsTask();
-        task.setNetworkDHCP(enable);
-        return task;
-    }
-
-    public static OrderTask setNetworkIPInfo(String ip, String sbNetworkMask, String gateway, String dns) {
-        ParamsTask task = new ParamsTask();
-        task.setNetworkIPInfo(ip, sbNetworkMask, gateway, dns);
+        task.setCountryBrand(country);
         return task;
     }
 
@@ -764,36 +685,6 @@ public class OrderTaskAssembler {
     public static OrderTask setIBeaconTxPower(@IntRange(from = 0, to = 15) int txPower) {
         ParamsTask task = new ParamsTask();
         task.setIBeaconTxPower(txPower);
-        return task;
-    }
-
-    public static OrderTask setMeteringReportEnable(@IntRange(from = 0, to = 1) int enable) {
-        ParamsTask task = new ParamsTask();
-        task.setMeteringReportEnable(enable);
-        return task;
-    }
-
-    public static OrderTask setPowerReportInterval(@IntRange(from = 1, to = 86400) int interval) {
-        ParamsTask task = new ParamsTask();
-        task.setPowerReportInterval(interval);
-        return task;
-    }
-
-    public static OrderTask setEnergyReportInterval(@IntRange(from = 1, to = 1440) int interval) {
-        ParamsTask task = new ParamsTask();
-        task.setEnergyReportInterval(interval);
-        return task;
-    }
-
-    public static OrderTask setLoadDetectionNotifyEnable(@IntRange(from = 0, to = 1) int enable) {
-        ParamsTask task = new ParamsTask();
-        task.setLoadDetectionNotifyEnable(enable);
-        return task;
-    }
-
-    public static OrderTask setUtcTime(){
-        ParamsTask task = new ParamsTask();
-        task.setCurrentUtcTime();
         return task;
     }
 }

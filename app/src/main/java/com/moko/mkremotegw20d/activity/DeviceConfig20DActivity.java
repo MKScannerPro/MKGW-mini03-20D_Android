@@ -210,11 +210,6 @@ public class DeviceConfig20DActivity extends BaseActivity<ActivityDeviceConfig20
         startActivity(new Intent(this, AdvertiseIBeacon20DActivity.class));
     }
 
-    public void onMeteringSettings(View view){
-        if (isWindowLocked()) return;
-        startActivity(new Intent(this, MeteringSettings20DActivity.class));
-    }
-
     public void onWifiSettings(View view) {
         if (isWindowLocked()) return;
         Intent intent = new Intent(this, WifiSettings20DActivity.class);
@@ -225,12 +220,6 @@ public class DeviceConfig20DActivity extends BaseActivity<ActivityDeviceConfig20
         if (isWindowLocked()) return;
         Intent intent = new Intent(this, MqttSettings20DActivity.class);
         startMQTTSettings.launch(intent);
-    }
-
-    public void onNetworkSettings(View view) {
-        if (isWindowLocked()) return;
-        Intent intent = new Intent(this, NetworkSettings20DActivity.class);
-        startActivity(intent);
     }
 
     public void onNtpSettings(View view) {

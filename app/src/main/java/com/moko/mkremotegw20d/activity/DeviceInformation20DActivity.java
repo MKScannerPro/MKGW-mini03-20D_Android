@@ -32,10 +32,11 @@ public class DeviceInformation20DActivity extends BaseActivity<ActivityDeviceInf
             orderTasks.add(OrderTaskAssembler.getDeviceName());
             orderTasks.add(OrderTaskAssembler.getDeviceModel());
             orderTasks.add(OrderTaskAssembler.getManufacturer());
-            orderTasks.add(OrderTaskAssembler.getFirmwareVersion());
             orderTasks.add(OrderTaskAssembler.getHardwareVersion());
-            orderTasks.add(OrderTaskAssembler.getSoftwareVersion());
+            orderTasks.add(OrderTaskAssembler.getWifiSoftwareVersion());
+            orderTasks.add(OrderTaskAssembler.getWifiFirmwareVersion());
             orderTasks.add(OrderTaskAssembler.getWifiMac());
+            orderTasks.add(OrderTaskAssembler.getBleFirmwareVersion());
             orderTasks.add(OrderTaskAssembler.getBleMac());
             MokoSupport.getInstance().sendOrder(orderTasks.toArray(new OrderTask[]{}));
         }, 500);
@@ -75,14 +76,8 @@ public class DeviceInformation20DActivity extends BaseActivity<ActivityDeviceInf
                 case CHAR_MANUFACTURER_NAME:
                     mBind.tvManufacturer.setText(new String(value));
                     break;
-                case CHAR_FIRMWARE_REVISION:
-                    mBind.tvDeviceFirmwareVersion.setText(new String(value));
-                    break;
                 case CHAR_HARDWARE_REVISION:
                     mBind.tvDeviceHardwareVersion.setText(new String(value));
-                    break;
-                case CHAR_SOFTWARE_REVISION:
-                    mBind.tvDeviceSoftwareVersion.setText(new String(value));
                     break;
                 case CHAR_PARAMS:
                     if (value.length >= 4) {
@@ -103,13 +98,22 @@ public class DeviceInformation20DActivity extends BaseActivity<ActivityDeviceInf
                                     case KEY_DEVICE_NAME:
                                         mBind.tvDeviceName.setText(new String(Arrays.copyOfRange(value, 4, 4 + length)));
                                         break;
+                                    case KEY_WIFI_SOFTWARE_VERSION:
+                                        mBind.tvDeviceSoftwareVersion.setText(new String(Arrays.copyOfRange(value, 4, 4 + length)));
+                                        break;
+                                    case KEY_WIFI_FIRMWARE_VERSION:
+                                        mBind.tvWifiFirmwareVersion.setText(new String(Arrays.copyOfRange(value, 4, 4 + length)));
+                                        break;
                                     case KEY_WIFI_MAC:
                                         byte[] wifiMacBytes = Arrays.copyOfRange(value, 4, 4 + length);
-                                        mBind.tvDeviceStaMac.setText(MokoUtils.bytesToHexString(wifiMacBytes).toUpperCase());
+                                        mBind.tvWifiMac.setText(MokoUtils.bytesToHexString(wifiMacBytes).toUpperCase());
+                                        break;
+                                    case KEY_BLE_FIRMWARE_VERSION:
+                                        mBind.tvBtFirmwareVersion.setText(new String(Arrays.copyOfRange(value, 4, 4 + length)));
                                         break;
                                     case KEY_BLE_MAC:
                                         byte[] bleMacBytes = Arrays.copyOfRange(value, 4, 4 + length);
-                                        mBind.tvDeviceBtMac.setText(MokoUtils.bytesToHexString(bleMacBytes).toUpperCase());
+                                        mBind.tvBtMac.setText(MokoUtils.bytesToHexString(bleMacBytes).toUpperCase());
                                         break;
 
                                 }
