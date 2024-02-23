@@ -14,6 +14,7 @@ import com.moko.support.remotegw20d.entity.OrderCHAR;
 import com.moko.support.remotegw20d.entity.OrderServices;
 
 import androidx.annotation.NonNull;
+import no.nordicsemi.android.ble.callback.SuccessCallback;
 
 final class MokoBleConfig extends MokoBleManager {
 
@@ -46,12 +47,11 @@ final class MokoBleConfig extends MokoBleManager {
 
     @Override
     public void init() {
-        enablePasswordNotify();
-        enableDisconnectedNotify();
-        enableParamNotify();
         requestMtu(247).with(((device, mtu) -> {
         })).then((device -> {
-            mMokoResponseCallback.onServicesDiscovered(gatt);
+            enablePasswordNotify();
+            enableDisconnectedNotify();
+            enableParamNotify();
         })).enqueue();
     }
 
@@ -125,7 +125,9 @@ final class MokoBleConfig extends MokoBleManager {
             XLog.e("device to app : " + MokoUtils.bytesToHexString(value));
             mMokoResponseCallback.onCharacteristicChanged(paramsCharacteristic, value);
         });
-        enableNotifications(paramsCharacteristic).enqueue();
+        enableNotifications(paramsCharacteristic).done(device -> {
+            mMokoResponseCallback.onServicesDiscovered(gatt);
+        }).enqueue();
     }
 
     public void disableParamNotify() {
