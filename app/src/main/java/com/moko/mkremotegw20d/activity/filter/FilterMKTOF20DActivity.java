@@ -194,7 +194,7 @@ public class FilterMKTOF20DActivity extends BaseActivity<ActivityFilterMkTof20dB
 
 
     private void saveParams() {
-        int msgId = MQTTConstants.CONFIG_MSG_ID_FILTER_BXP_TAG;
+        int msgId = MQTTConstants.CONFIG_MSG_ID_FILTER_TOF;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("switch_value", mBind.cbMkTof.isChecked() ? 1 : 0);
         JsonArray codeList = new JsonArray();
