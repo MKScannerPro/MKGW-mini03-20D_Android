@@ -62,6 +62,8 @@ public class SetAppMQTT20DActivity extends BaseActivity<ActivityMqttApp20dBindin
     private String expertFilePath;
     private boolean isFileError;
 
+    private boolean mIsSetAppSettings;
+
     @Override
     protected void onCreate() {
         String MQTTConfigStr = SPUtiles.getStringValue(this, AppConstants.SP_KEY_MQTT_CONFIG_APP, "");
@@ -125,6 +127,7 @@ public class SetAppMQTT20DActivity extends BaseActivity<ActivityMqttApp20dBindin
 
     @Subscribe(threadMode = ThreadMode.POSTING, priority = 10)
     public void onMQTTConnectionCompleteEvent(MQTTConnectionCompleteEvent event) {
+        if (!mIsSetAppSettings) return;
         EventBus.getDefault().cancelEventDelivery(event);
         String mqttConfigStr = new Gson().toJson(mqttConfig, MQTTConfig.class);
         runOnUiThread(() -> {
@@ -201,6 +204,7 @@ public class SetAppMQTT20DActivity extends BaseActivity<ActivityMqttApp20dBindin
         MQTTSupport.getInstance().disconnectMqtt();
         showLoadingProgressDialog();
         mBind.etMqttHost.postDelayed(() -> {
+            mIsSetAppSettings = true;
             try {
                 MQTTSupport.getInstance().connectMqtt(mqttConfigStr);
             } catch (FileNotFoundException e) {

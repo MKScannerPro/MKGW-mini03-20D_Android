@@ -16,6 +16,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.BuildConfig;
 import com.moko.mkremotegw20d.R;
@@ -26,8 +30,12 @@ import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityMainRemote20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
 import com.moko.mkremotegw20d.dialog.AlertMessageDialog;
+import com.moko.mkremotegw20d.dialog.LoginDialog;
+import com.moko.mkremotegw20d.net.entity.CommonResp;
+import com.moko.mkremotegw20d.net.entity.LoginEntity;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
+import com.moko.mkremotegw20d.net.Urls;
 import com.moko.mkremotegw20d.utils.SPUtiles;
 import com.moko.mkremotegw20d.utils.ToastUtils;
 import com.moko.mkremotegw20d.utils.Utils;
@@ -60,6 +68,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import okhttp3.RequestBody;
 
 public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBinding> implements BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener {
     private ArrayList<MokoDevice> devices;
@@ -68,7 +77,7 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
     public String mAppMqttConfigStr;
     private MQTTConfig mAppMqttConfig;
     public static String PATH_LOGCAT;
-
+    public static String mAccessToken;
     @Override
     protected void onCreate() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -311,6 +320,78 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
             ToastUtils.showToast(this, String.format("SSID:%s, the network cannot available,please check", ssid));
             XLog.i(String.format("SSID:%s, the network cannot available,please check", ssid));
         }
+    }
+
+    public void mainSyncDevices(View view) {
+        if (isWindowLocked()) return;
+        if (devices.isEmpty()) {
+            ToastUtils.showToast(this, "Add devices first");
+            return;
+        }
+        // 登录
+        String account = SPUtiles.getStringValue(this, AppConstants.EXTRA_KEY_LOGIN_ACCOUNT, "");
+        String password = SPUtiles.getStringValue(this, AppConstants.EXTRA_KEY_LOGIN_PASSWORD, "");
+        int env = SPUtiles.getIntValue(this, AppConstants.EXTRA_KEY_LOGIN_ENV, 0);
+        if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+            LoginDialog dialog = new LoginDialog();
+            dialog.setOnLoginClicked(this::login);
+            dialog.show(getSupportFragmentManager());
+            return;
+        }
+        login(account, password, env);
+    }
+
+    private void login(String account, String password, int envValue) {
+        LoginEntity entity = new LoginEntity();
+        entity.username = account;
+        entity.password = password;
+        entity.source = 1;
+        if (envValue == 0)
+            Urls.setCloudEnv(getApplicationContext());
+        else
+            Urls.setTestEnv(getApplicationContext());
+        RequestBody body = RequestBody.create(Urls.JSON, new Gson().toJson(entity));
+        OkGo.<String>post(Urls.loginApi(getApplicationContext()))
+                .upRequestBody(body)
+                .execute(new StringCallback() {
+
+                    @Override
+                    public void onStart(Request<String, ? extends Request> request) {
+                        showLoadingProgressDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        Type type = new TypeToken<CommonResp<JsonObject>>() {
+                        }.getType();
+                        CommonResp<JsonObject> commonResp = new Gson().fromJson(response.body(), type);
+                        if (commonResp.code != 200) {
+                            ToastUtils.showToast(RemoteMain20DActivity.this, commonResp.msg);
+                            LoginDialog dialog = new LoginDialog();
+                            dialog.setOnLoginClicked((account1, password1, env) -> login(account1, password1, env));
+                            dialog.show(getSupportFragmentManager());
+                            return;
+                        }
+                        SPUtiles.setStringValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_ACCOUNT, account);
+                        SPUtiles.setStringValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_PASSWORD, password);
+                        SPUtiles.setIntValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_ENV, envValue);
+                        mAccessToken = commonResp.data.get("access_token").getAsString();
+                        startActivity(new Intent(RemoteMain20DActivity.this, SyncDeviceActivity.class));
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        ToastUtils.showToast(RemoteMain20DActivity.this, R.string.request_error);
+                        LoginDialog dialog = new LoginDialog();
+                        dialog.setOnLoginClicked((account12, password12, env) -> login(account12, password12, env));
+                        dialog.show(getSupportFragmentManager());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        dismissLoadingProgressDialog();
+                    }
+                });
     }
 
     @Override
