@@ -142,6 +142,7 @@ public class SetAppMQTT20DActivity extends BaseActivity<ActivityMqttApp20dBindin
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMQTTConnectionFailureEvent(MQTTConnectionFailureEvent event) {
+        if (!mIsSetAppSettings) return;
         ToastUtils.showToast(SetAppMQTT20DActivity.this, getString(R.string.mqtt_connect_failed));
         dismissLoadingProgressDialog();
         finish();
