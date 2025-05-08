@@ -25,19 +25,19 @@ import com.moko.mkremotegw20d.activity.set.AdvertiseIBeacon20DActivity;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityDeviceConfig20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
-import com.moko.mkremotegw20d.dialog.Custom20DDialog;
+import com.moko.lib.scannerui.dialog.CustomDialog;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
+import com.moko.lib.mqtt.MQTTSupport;
 import com.moko.support.remotegw20d.MokoSupport;
 import com.moko.support.remotegw20d.OrderTaskAssembler;
-import com.moko.support.remotegw20d.entity.MsgNotify;
+import com.moko.lib.mqtt.entity.MsgNotify;
 import com.moko.support.remotegw20d.entity.OrderCHAR;
 import com.moko.support.remotegw20d.entity.ParamsKeyEnum;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +53,7 @@ public class DeviceConfig20DActivity extends BaseActivity<ActivityDeviceConfig20
     private int mSelectedDeviceType;
     private boolean mIsMQTTConfigFinished;
     private boolean mIsWIFIConfigFinished;
-    private Custom20DDialog mqttConnDialog;
+    private CustomDialog mqttConnDialog;
     private DonutProgress donutProgress;
     private boolean isSettingSuccess;
     private boolean isDeviceConnectSuccess;
@@ -264,9 +264,9 @@ public class DeviceConfig20DActivity extends BaseActivity<ActivityDeviceConfig20
 
     private void showConnMqttDialog() {
         isDeviceConnectSuccess = false;
-        View view = LayoutInflater.from(this).inflate(R.layout.mqtt_conn_content, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_mqtt_conn_content, null);
         donutProgress = view.findViewById(R.id.dp_progress);
-        mqttConnDialog = new Custom20DDialog.Builder(this)
+        mqttConnDialog = new CustomDialog.Builder(this)
                 .setContentView(view)
                 .create();
         mqttConnDialog.setCancelable(false);

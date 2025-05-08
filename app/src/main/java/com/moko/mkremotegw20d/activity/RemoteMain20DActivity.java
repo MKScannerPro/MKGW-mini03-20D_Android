@@ -18,8 +18,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
+import com.moko.lib.scanneriot.IoTDMConstants;
+import com.moko.lib.scanneriot.activity.SyncDeviceActivity;
+import com.moko.lib.scanneriot.entity.CommonResp;
+import com.moko.lib.scanneriot.entity.SyncDevice;
+import com.moko.lib.scanneriot.utils.IoTDMSPUtils;
 import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.BuildConfig;
 import com.moko.mkremotegw20d.R;
@@ -29,29 +35,28 @@ import com.moko.mkremotegw20d.adapter.Device20DAdapter;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityMainRemote20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
-import com.moko.mkremotegw20d.dialog.AlertMessageDialog;
-import com.moko.mkremotegw20d.dialog.LoginDialog;
-import com.moko.mkremotegw20d.net.entity.CommonResp;
-import com.moko.mkremotegw20d.net.entity.LoginEntity;
+import com.moko.lib.scannerui.dialog.AlertMessageDialog;
+import com.moko.lib.scanneriot.dialog.LoginDialog;
+import com.moko.lib.scanneriot.entity.LoginEntity;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
-import com.moko.mkremotegw20d.net.Urls;
+import com.moko.lib.scanneriot.Urls;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.mkremotegw20d.utils.Utils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
+import com.moko.lib.mqtt.MQTTSupport;
 import com.moko.support.remotegw20d.MokoSupport;
-import com.moko.support.remotegw20d.entity.MsgNotify;
-import com.moko.support.remotegw20d.event.DeviceDeletedEvent;
-import com.moko.support.remotegw20d.event.DeviceModifyNameEvent;
-import com.moko.support.remotegw20d.event.DeviceOnlineEvent;
-import com.moko.support.remotegw20d.event.MQTTConnectionCompleteEvent;
-import com.moko.support.remotegw20d.event.MQTTConnectionFailureEvent;
-import com.moko.support.remotegw20d.event.MQTTConnectionLostEvent;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
-import com.moko.support.remotegw20d.event.MQTTUnSubscribeFailureEvent;
-import com.moko.support.remotegw20d.event.MQTTUnSubscribeSuccessEvent;
+import com.moko.lib.mqtt.entity.MsgNotify;
+import com.moko.lib.mqtt.event.DeviceDeletedEvent;
+import com.moko.lib.mqtt.event.DeviceModifyNameEvent;
+import com.moko.lib.mqtt.event.DeviceOnlineEvent;
+import com.moko.lib.mqtt.event.MQTTConnectionCompleteEvent;
+import com.moko.lib.mqtt.event.MQTTConnectionFailureEvent;
+import com.moko.lib.mqtt.event.MQTTConnectionLostEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.event.MQTTUnSubscribeFailureEvent;
+import com.moko.lib.mqtt.event.MQTTUnSubscribeSuccessEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.EventBus;
@@ -77,7 +82,6 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
     public String mAppMqttConfigStr;
     private MQTTConfig mAppMqttConfig;
     public static String PATH_LOGCAT;
-    public static String mAccessToken;
     @Override
     protected void onCreate() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -329,9 +333,9 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
             return;
         }
         // 登录
-        String account = SPUtiles.getStringValue(this, AppConstants.EXTRA_KEY_LOGIN_ACCOUNT, "");
-        String password = SPUtiles.getStringValue(this, AppConstants.EXTRA_KEY_LOGIN_PASSWORD, "");
-        int env = SPUtiles.getIntValue(this, AppConstants.EXTRA_KEY_LOGIN_ENV, 0);
+        String account = IoTDMSPUtils.getStringValue(this, IoTDMConstants.EXTRA_KEY_LOGIN_ACCOUNT, "");
+        String password = IoTDMSPUtils.getStringValue(this, IoTDMConstants.EXTRA_KEY_LOGIN_PASSWORD, "");
+        int env = IoTDMSPUtils.getIntValue(this, IoTDMConstants.EXTRA_KEY_LOGIN_ENV, 0);
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
             LoginDialog dialog = new LoginDialog();
             dialog.setOnLoginClicked(this::login);
@@ -362,7 +366,7 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
 
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Type type = new TypeToken<CommonResp<JsonObject>>() {
+                        Type type = new TypeToken<com.moko.lib.scanneriot.entity.CommonResp<JsonObject>>() {
                         }.getType();
                         CommonResp<JsonObject> commonResp = new Gson().fromJson(response.body(), type);
                         if (commonResp.code != 200) {
@@ -372,11 +376,29 @@ public class RemoteMain20DActivity extends BaseActivity<ActivityMainRemote20dBin
                             dialog.show(getSupportFragmentManager());
                             return;
                         }
-                        SPUtiles.setStringValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_ACCOUNT, account);
-                        SPUtiles.setStringValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_PASSWORD, password);
-                        SPUtiles.setIntValue(RemoteMain20DActivity.this, AppConstants.EXTRA_KEY_LOGIN_ENV, envValue);
-                        mAccessToken = commonResp.data.get("access_token").getAsString();
-                        startActivity(new Intent(RemoteMain20DActivity.this, SyncDeviceActivity.class));
+                        // add header
+                        String accessToken = commonResp.data.get("access_token").getAsString();
+                        HttpHeaders headers = new HttpHeaders();
+                        headers.put("Authorization", accessToken);
+                        OkGo.getInstance().addCommonHeaders(headers);
+
+                        IoTDMSPUtils.setStringValue(RemoteMain20DActivity.this, IoTDMConstants.EXTRA_KEY_LOGIN_ACCOUNT, account);
+                        IoTDMSPUtils.setStringValue(RemoteMain20DActivity.this, IoTDMConstants.EXTRA_KEY_LOGIN_PASSWORD, password);
+                        IoTDMSPUtils.setIntValue(RemoteMain20DActivity.this, IoTDMConstants.EXTRA_KEY_LOGIN_ENV, envValue);
+                        Intent intent = new Intent(RemoteMain20DActivity.this, SyncDeviceActivity.class);
+                        ArrayList<SyncDevice> syncDevices = new ArrayList<>();
+                        for (MokoDevice device : devices) {
+                            SyncDevice syncDevice = new SyncDevice();
+                            syncDevice.mac = device.mac;
+                            syncDevice.macName = device.name;
+                            syncDevice.publishTopic = device.topicPublish;
+                            syncDevice.subscribeTopic = device.topicSubscribe;
+                            syncDevice.lastWill = device.lwtTopic;
+                            syncDevice.model = "11";
+                            syncDevices.add(syncDevice);
+                        }
+                        intent.putExtra(IoTDMConstants.EXTRA_KEY_SYNC_DEVICES, syncDevices);
+                        startActivity(intent);
                     }
 
                     @Override

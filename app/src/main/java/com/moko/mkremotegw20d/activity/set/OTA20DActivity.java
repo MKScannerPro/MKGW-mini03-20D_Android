@@ -15,17 +15,17 @@ import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.R;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityOta20dBinding;
-import com.moko.mkremotegw20d.dialog.Bottom20DDialog;
+import com.moko.lib.scannerui.dialog.BottomDialog;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
-import com.moko.support.remotegw20d.entity.MsgConfigResult;
-import com.moko.support.remotegw20d.entity.MsgNotify;
-import com.moko.support.remotegw20d.event.DeviceOnlineEvent;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.MQTTSupport;
+import com.moko.lib.mqtt.entity.MsgConfigResult;
+import com.moko.lib.mqtt.entity.MsgNotify;
+import com.moko.lib.mqtt.event.DeviceOnlineEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.Subscribe;
@@ -138,7 +138,7 @@ public class OTA20DActivity extends BaseActivity<ActivityOta20dBinding> {
 
     private void selectOtaType() {
         if (isWindowLocked()) return;
-        Bottom20DDialog dialog = new Bottom20DDialog();
+        BottomDialog dialog = new BottomDialog();
         dialog.setDatas(new ArrayList<>(Arrays.asList(otaTypeArr)), otaType);
         dialog.setListener(value -> {
             otaType = value;

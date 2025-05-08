@@ -24,20 +24,20 @@ import com.moko.mkremotegw20d.activity.RemoteMain20DActivity;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityDeviceSetting20dBinding;
 import com.moko.mkremotegw20d.db.DBTools20D;
-import com.moko.mkremotegw20d.dialog.AlertMessageDialog;
-import com.moko.mkremotegw20d.dialog.Custom20DDialog;
+import com.moko.lib.scannerui.dialog.AlertMessageDialog;
+import com.moko.lib.scannerui.dialog.CustomDialog;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
-import com.moko.support.remotegw20d.entity.MsgConfigResult;
-import com.moko.support.remotegw20d.entity.MsgReadResult;
-import com.moko.support.remotegw20d.event.DeviceDeletedEvent;
-import com.moko.support.remotegw20d.event.DeviceModifyNameEvent;
-import com.moko.support.remotegw20d.event.DeviceOnlineEvent;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.MQTTSupport;
+import com.moko.lib.mqtt.entity.MsgConfigResult;
+import com.moko.lib.mqtt.entity.MsgReadResult;
+import com.moko.lib.mqtt.event.DeviceDeletedEvent;
+import com.moko.lib.mqtt.event.DeviceModifyNameEvent;
+import com.moko.lib.mqtt.event.DeviceOnlineEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.EventBus;
@@ -161,13 +161,13 @@ public class DeviceSetting20DActivity extends BaseActivity<ActivityDeviceSetting
 
     public void onEditName(View view) {
         if (isWindowLocked()) return;
-        View content = LayoutInflater.from(this).inflate(R.layout.modify_name, null);
+        View content = LayoutInflater.from(this).inflate(R.layout.layout_modify_name, null);
         final EditText etDeviceName = content.findViewById(R.id.et_device_name);
         String deviceName = etDeviceName.getText().toString();
         etDeviceName.setText(deviceName);
         etDeviceName.setSelection(deviceName.length());
         etDeviceName.setFilters(new InputFilter[]{filter, new InputFilter.LengthFilter(20)});
-        Custom20DDialog dialog = new Custom20DDialog.Builder(this)
+        CustomDialog dialog = new CustomDialog.Builder(this)
                 .setContentView(content)
                 .setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override

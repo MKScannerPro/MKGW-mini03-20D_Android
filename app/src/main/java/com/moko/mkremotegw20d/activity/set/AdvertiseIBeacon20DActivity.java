@@ -18,20 +18,20 @@ import com.moko.ble.lib.utils.MokoUtils;
 import com.moko.mkremotegw20d.AppConstants;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityAdvertiseIbeacon20dBinding;
-import com.moko.mkremotegw20d.dialog.Bottom20DDialog;
+import com.moko.lib.scannerui.dialog.BottomDialog;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
+import com.moko.lib.mqtt.MQTTSupport;
 import com.moko.support.remotegw20d.MokoSupport;
 import com.moko.support.remotegw20d.OrderTaskAssembler;
-import com.moko.support.remotegw20d.entity.MsgConfigResult;
-import com.moko.support.remotegw20d.entity.MsgReadResult;
+import com.moko.lib.mqtt.entity.MsgConfigResult;
+import com.moko.lib.mqtt.entity.MsgReadResult;
 import com.moko.support.remotegw20d.entity.OrderCHAR;
 import com.moko.support.remotegw20d.entity.ParamsKeyEnum;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.Subscribe;
@@ -94,7 +94,7 @@ public class AdvertiseIBeacon20DActivity extends BaseActivity<ActivityAdvertiseI
         }
         mBind.tvTxPowerVal.setOnClickListener(v -> {
             if (isWindowLocked()) return;
-            Bottom20DDialog dialog = new Bottom20DDialog();
+            BottomDialog dialog = new BottomDialog();
             dialog.setDatas(new ArrayList<>(Arrays.asList(txPowerArr)), mSelected);
             dialog.setListener(value -> {
                 mSelected = value;

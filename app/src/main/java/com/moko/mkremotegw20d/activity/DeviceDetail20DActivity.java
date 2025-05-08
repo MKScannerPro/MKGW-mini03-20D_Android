@@ -23,18 +23,18 @@ import com.moko.mkremotegw20d.db.DBTools20D;
 import com.moko.mkremotegw20d.entity.MQTTConfig;
 import com.moko.mkremotegw20d.entity.MokoDevice;
 import com.moko.mkremotegw20d.utils.SPUtiles;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MQTTConstants;
-import com.moko.support.remotegw20d.MQTTSupport;
+import com.moko.lib.mqtt.MQTTSupport;
 import com.moko.support.remotegw20d.entity.BXPButtonInfo;
 import com.moko.support.remotegw20d.entity.BleConnectedList;
-import com.moko.support.remotegw20d.entity.MsgConfigResult;
-import com.moko.support.remotegw20d.entity.MsgNotify;
-import com.moko.support.remotegw20d.entity.MsgReadResult;
+import com.moko.lib.mqtt.entity.MsgConfigResult;
+import com.moko.lib.mqtt.entity.MsgNotify;
+import com.moko.lib.mqtt.entity.MsgReadResult;
 import com.moko.support.remotegw20d.entity.OtherDeviceInfo;
-import com.moko.support.remotegw20d.event.DeviceModifyNameEvent;
-import com.moko.support.remotegw20d.event.DeviceOnlineEvent;
-import com.moko.support.remotegw20d.event.MQTTMessageArrivedEvent;
+import com.moko.lib.mqtt.event.DeviceModifyNameEvent;
+import com.moko.lib.mqtt.event.DeviceOnlineEvent;
+import com.moko.lib.mqtt.event.MQTTMessageArrivedEvent;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,7 +85,7 @@ public class DeviceDetail20DActivity extends BaseActivity<ActivityDetail20dBindi
     }
 
     private void changeView() {
-        mBind.ivScanSwitch.setImageResource(mScanSwitch ? R.drawable.checkbox_open : R.drawable.checkbox_close);
+        mBind.ivScanSwitch.setImageResource(mScanSwitch ? R.drawable.ic_checkbox_open : R.drawable.ic_checkbox_close);
         mBind.tvScanDeviceTotal.setVisibility(mScanSwitch ? View.VISIBLE : View.GONE);
         mBind.tvScanDeviceTotal.setText(getString(R.string.scan_device_total, mScanDevices.size()));
         mBind.tvManageDevices.setVisibility(mScanSwitch ? View.VISIBLE : View.GONE);
@@ -295,7 +295,7 @@ public class DeviceDetail20DActivity extends BaseActivity<ActivityDetail20dBindi
             return;
         }
         mScanSwitch = !mScanSwitch;
-        mBind.ivScanSwitch.setImageResource(mScanSwitch ? R.drawable.checkbox_open : R.drawable.checkbox_close);
+        mBind.ivScanSwitch.setImageResource(mScanSwitch ? R.drawable.ic_checkbox_open : R.drawable.ic_checkbox_close);
         mBind.tvManageDevices.setVisibility(mScanSwitch ? View.VISIBLE : View.GONE);
         mBind.tvScanDeviceTotal.setVisibility(mScanSwitch ? View.VISIBLE : View.GONE);
         mBind.tvScanDeviceTotal.setText(getString(R.string.scan_device_total, 0));

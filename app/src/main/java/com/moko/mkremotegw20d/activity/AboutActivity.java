@@ -8,9 +8,9 @@ import com.moko.ble.lib.utils.MokoUtils;
 import com.moko.mkremotegw20d.R;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityAboutBinding;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.mkremotegw20d.utils.Utils;
-import com.moko.support.remotegw20d.event.MQTTConnectionCompleteEvent;
+import com.moko.lib.mqtt.event.MQTTConnectionCompleteEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -56,7 +56,7 @@ public class AboutActivity extends BaseActivity<ActivityAboutBinding> {
             return;
         }
         String address = "feedback@mokotechnology.com";
-        StringBuilder mailContent = new StringBuilder("MKRemoteGW_");
+        StringBuilder mailContent = new StringBuilder("MKRemoteGW20D_");
         Calendar calendar = Calendar.getInstance();
         String date = MokoUtils.calendar2strDate(calendar, "yyyyMMdd");
         mailContent.append(date);

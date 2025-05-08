@@ -10,8 +10,8 @@ import com.moko.ble.lib.task.OrderTask;
 import com.moko.ble.lib.task.OrderTaskResponse;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityNtpSettings20dBinding;
-import com.moko.mkremotegw20d.dialog.Bottom20DDialog;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.dialog.BottomDialog;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MokoSupport;
 import com.moko.support.remotegw20d.OrderTaskAssembler;
 import com.moko.support.remotegw20d.entity.OrderCHAR;
@@ -154,7 +154,7 @@ public class NtpSettings20DActivity extends BaseActivity<ActivityNtpSettings20dB
 
     public void onSelectTimeZone(View view) {
         if (isWindowLocked()) return;
-        Bottom20DDialog dialog = new Bottom20DDialog();
+        BottomDialog dialog = new BottomDialog();
         dialog.setDatas(mTimeZones, mSelected);
         dialog.setListener(value -> {
             mSelected = value;

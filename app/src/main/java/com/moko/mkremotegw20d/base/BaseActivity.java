@@ -11,12 +11,12 @@ import com.elvishew.xlog.XLog;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.moko.mkremotegw20d.activity.GuideActivity;
-import com.moko.mkremotegw20d.dialog.LoadingDialog;
-import com.moko.mkremotegw20d.dialog.LoadingMessageDialog;
-import com.moko.support.remotegw20d.entity.MsgConfigReq;
-import com.moko.support.remotegw20d.entity.MsgDeviceInfo;
-import com.moko.support.remotegw20d.entity.MsgReadReq;
-import com.moko.support.remotegw20d.event.DeviceOnlineEvent;
+import com.moko.lib.scannerui.dialog.LoadingDialog;
+import com.moko.lib.scannerui.dialog.LoadingMessageDialog;
+import com.moko.lib.mqtt.entity.MsgConfigReq;
+import com.moko.lib.mqtt.entity.MsgDeviceInfo;
+import com.moko.lib.mqtt.entity.MsgReadReq;
+import com.moko.lib.mqtt.event.DeviceOnlineEvent;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -13,8 +13,8 @@ import com.moko.ble.lib.utils.MokoUtils;
 import com.moko.mkremotegw20d.R;
 import com.moko.mkremotegw20d.base.BaseActivity;
 import com.moko.mkremotegw20d.databinding.ActivityWifiSettings20dBinding;
-import com.moko.mkremotegw20d.dialog.Bottom20DDialog;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.dialog.BottomDialog;
+import com.moko.lib.scannerui.utils.ToastUtils;
 import com.moko.support.remotegw20d.MokoSupport;
 import com.moko.support.remotegw20d.OrderTaskAssembler;
 import com.moko.support.remotegw20d.entity.OrderCHAR;
@@ -200,7 +200,7 @@ public class WifiSettings20DActivity extends BaseActivity<ActivityWifiSettings20
     }
 
     private void setDhcpEnable(boolean enable) {
-        mBind.imgDhcp.setImageResource(enable ? R.drawable.checkbox_open : R.drawable.checkbox_close);
+        mBind.imgDhcp.setImageResource(enable ? R.drawable.ic_checkbox_open : R.drawable.ic_checkbox_close);
         mBind.clIp.setVisibility(enable ? View.GONE : View.VISIBLE);
     }
 
@@ -214,7 +214,7 @@ public class WifiSettings20DActivity extends BaseActivity<ActivityWifiSettings20
 
     private void onSelectCountry() {
         if (isWindowLocked()) return;
-        Bottom20DDialog dialog = new Bottom20DDialog();
+        BottomDialog dialog = new BottomDialog();
         dialog.setDatas(new ArrayList<>(Arrays.asList(countryBrand)), countrySelected);
         dialog.setListener(value -> {
             countrySelected = value;

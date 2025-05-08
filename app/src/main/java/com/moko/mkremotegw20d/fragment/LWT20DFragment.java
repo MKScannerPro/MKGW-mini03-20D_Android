@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.moko.mkremotegw20d.databinding.FragmentLwt20dBinding;
-import com.moko.mkremotegw20d.utils.ToastUtils;
+import com.moko.lib.scannerui.utils.ToastUtils;
 
 public class LWT20DFragment extends Fragment {
     private static final String TAG = LWT20DFragment.class.getSimpleName();
