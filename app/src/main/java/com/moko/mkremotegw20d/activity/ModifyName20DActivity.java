@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -64,11 +63,7 @@ public class ModifyName20DActivity extends BaseActivity<ActivityModifyDeviceName
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
